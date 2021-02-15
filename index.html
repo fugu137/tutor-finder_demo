@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Tutor Finder</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+  <header class="sidebar">
+    <nav class="sidebar-nav">
+      <button title="Browse Tutors" class="current" onclick="toggleMainTab(this, 'browse-tab')">
+        <i class="far fa-address-book fa-4x"></i>
+      </button>
+      <button title="Book a Tutor" onclick="toggleMainTab(this, 'book-tab')">
+        <i class="far fa-calendar-alt fa-4x"></i>
+      </button>
+    </nav>
+  </header>
+
+  <header class="topbar">
+    <nav class="topbar-nav">
+      <button name="tutor-view" title="Add Tutor" onclick="openAddTutorPopup()">
+        <i class="fas fa-chalkboard-teacher fa-2x"></i>
+      </button>
+    </nav>
+  </header>
+
+  <header class="logobar">
+    TF
+  </header>
+
+  <main>
+
+    <section id="browse-tab" class="tab open">
+
+      <header>
+        <nav class="filter-pane" onclick="toggleFilter(event)">
+          <button class="selected" id="all-button">All</button>
+          <button>Arabic</button>
+          <button>Biology</button>
+          <button>Chemistry</button>
+          <button>Economics</button>
+          <button>English</button>
+          <button>French</button>
+          <button>Geography</button>
+          <button>Geology</button>
+          <button>German</button>
+          <button>History</button>
+          <button>Japanese</button>
+          <button>Mathematics</button>
+          <button>Physics</button>
+        </nav>
+      </header>
+
+      <template class="section-template">
+        <section class="profile-pane">
+        </section>
+        <!-- <footer>
+          <button class="load-button" onclick="">Load More</button>
+        </footer> -->
+      </template>
+
+      <template class="profile-template">
+        <article class="profile">
+          <img class="profile-pic" src="src/main/resources/static/profile_images/default_profile_image.png">
+          <div class="info-popout">
+            <header class="title-pane">
+              <h5></h5>
+              <span id="email-pane"></span>
+            </header>
+            <div class="subjects-pane">
+              <div class="subject-box"></div>
+            </div>
+          </div>
+        </article>
+      </template>
+      
+    </section>
+
+    <section id="book-tab" class="tab">
+      <article class="message-pane">
+        <p>No tutor schedules available yet.</p>
+      </article>
+    </section>
+
+  </main>
+
+  <section class="modal">
+
+    <article class="login-pane">
+      <header>
+        <h3>Add a Tutor</h3>
+        <button class="close-button" onclick="closeAddTutorPopup()">&#x2715</button>
+      </header>
+
+      <form>
+        <label>First Name: </label>
+        <input id="firstname" placeholder="Enter First Name" type="text" name="firstName" required>
+
+        <label>Last Name: </label>
+        <input id="lastname" placeholder="Enter Surname" type="text" name="surname" required>
+
+        <label>Email Address: </label>
+        <input id="email" placeholder="Enter Email Address" type="email" name="email" required>
+
+        <div id="subjects">
+
+          <span>
+            <input type="checkbox" value="Biology"> <label class="box-label">Biology</label>
+          </span>
+          <span>
+            <input type="checkbox" value="Physics"> <label class="box-label">Physics</label>
+          </span>
+          <span>
+            <input type="checkbox" value="Mathematics"> <label class="box-label">Mathematics</label>
+          </span>
+          <span>
+            <input type="checkbox" value="Geology"> <label class="box-label">Geology</label>
+          </span>
+          <span>
+            <input type="checkbox" value="Geography"> <label class="box-label">Geography</label>
+          </span>
+          <span>
+            <input type="checkbox" value="French"> <label class="box-label">French</label>
+          </span>
+          <span>
+            <input type="checkbox" value="Japanese"> <label class="box-label">Japanese</label>
+          </span>
+          <span>
+            <input type="checkbox" value="Arabic"> <label class="box-label">Arabic</label>
+          </span>
+          <span>
+            <input type="checkbox" value="English"> <label class="box-label">English</label>
+          </span>
+          <span>
+            <input type="checkbox" value="Economics"> <label class="box-label">Economics</label>
+          </span>
+          <span>
+            <input type="checkbox" value="Chemistry"> <label class="box-label">Chemistry</label>
+          </span>
+          <span>
+            <input type="checkbox" value="History"> <label class="box-label">History</label>
+          </span>
+          <span>
+            <input type="checkbox" value="Photography"> <label class="box-label">Photography</label>
+          </span>
+          <span>
+            <input type="checkbox" value="Art"> <label class="box-label">Art</label>
+          </span>
+
+        </div>
+
+        <div class="upload">
+          <label id="upload-label">Upload a profile picture</label>
+          <img id="preview"
+            src="https://images.pexels.com/photos/5810306/pexels-photo-5810306.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260">
+          <input id="upload-button" type="file" accept="image/*" onchange="previewImg(this)"></input>
+        </div>
+
+        <button id="submit-button" class="submit-button" type="button" onclick="processForm()">Submit
+        </button>
+      </form>
+    </article>
+    
+  </section>
+
+  <script type="text/javascript" src="script.js"></script>
+</body>
+
+</html>
