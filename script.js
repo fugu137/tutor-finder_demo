@@ -5,10 +5,8 @@ loadProfiles();
 
 function loadProfiles() {
     const mainSection = document.getElementById("browse-tab");
-    // const fragment = document.createDocumentFragment();
-
     const fragment = document.querySelectorAll(".section-template")[0].content.cloneNode(true);
-    // fragment.appendChild(profilePane);
+
 
     fetch(url)
         .then(function (response) {
@@ -43,19 +41,12 @@ function loadProfiles() {
                 const profilePane = fragment.querySelectorAll("section")[0];
                 profilePane.appendChild(profile);
             }
-            // const mainFooter = document.querySelectorAll("main footer")[0];
 
-            // mainSection.insertBefore(fragment, mainFooter);
-            // mainFooter.scrollIntoView({ behavior: "smooth" });
             mainSection.appendChild(fragment);
         });
 
 }
 
-function loadMoreProfiles() {
-    const fragment = document.createDocumentFragment();
-
-}
 
 //End Initialization Methods//
 const modal = document.getElementsByClassName("modal")[0];
@@ -63,7 +54,7 @@ const activeFilters = new Array();
 
 function toggleMainTab(tabButton, tabPane) {
     const tabButtons = document.querySelectorAll(".sidebar-nav button");
-    const tabPanes = document.querySelectorAll(".tab"); 
+    const tabPanes = document.querySelectorAll(".tab");
 
     for (var i = 0; i < tabButtons.length; i++) {
         tabButtons[i].classList.remove("current");
@@ -191,25 +182,24 @@ function submitTutor(firstName, surname, email, subjects, picture) {
         formData.append("picture", picture);
     }
 
-        fetch(url, {
-            method: "POST",
-            mode: "no-cors",
-            cache: "no-cache",
-            credentials: "same-origin",
-            // headers: {
-            //     "Content-Type": "multipart/form-data"
-            // },
-            body: formData
-        })
-        .then(response => {
+    fetch(url, {
+        method: "POST",
+        body: formData
+    })
+        .then(function () {
             closeAddTutorPopup();
-            alert("Tutor successfully added!");
+            // alert("Tutor successfully added!");
+            refreshProfiles();
         })
         .catch(error => {
             console.error("Unable to add tutor: " + error);
         });
-        
-        
-    
+}
+
+function refreshProfiles() {
+    location.reload();
+
+    const mainFooter = document.querySelectorAll("main footer")[0];
+    mainFooter.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 //End Form Methods//
