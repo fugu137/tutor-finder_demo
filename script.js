@@ -21,25 +21,31 @@ function loadProfiles() {
                 const subjects = data[i].subjects;
                 const imagePath = data[i].imagePath;
 
-                const profile = document.querySelectorAll(".profile-template")[0].content.cloneNode(true);
-                profile.querySelectorAll(".title-pane h5")[0].textContent += firstName + " " + surname;
-                profile.querySelectorAll("#email-pane")[0].textContent = email;
+                const profileFrag = document.querySelectorAll(".profile-template")[0].content.cloneNode(true);
+                profileFrag.querySelectorAll(".title-pane h5")[0].textContent = firstName + " " + surname;
+                profileFrag.querySelectorAll(".email-pane")[0].textContent = email;
 
-                const subjectsPane = profile.querySelectorAll(".subjects-pane")[0];
+                const subjectsPane = profileFrag.querySelectorAll(".subjects-pane")[0];
 
                 for (var j = 0; j < subjects.length; j++) {
-                    const blankBox = profile.querySelectorAll(".subject-box")[0];
+                    const blankBox = profileFrag.querySelectorAll(".subject-box")[0];
                     const subjectBox = blankBox.cloneNode(true);
                     subjectBox.textContent = subjects[j];
                     subjectsPane.insertBefore(subjectBox, blankBox);
                 }
 
                 if (imagePath !== null) {
-                    profile.querySelectorAll(".profile-pic")[0].src = imagePath;
+                    profileFrag.querySelectorAll(".profile-pic")[0].src = imagePath;
                 }
 
                 const profilePane = fragment.querySelectorAll("section")[0];
-                profilePane.appendChild(profile);
+                profilePane.appendChild(profileFrag);
+
+                const profile = profilePane.getElementsByClassName("profile")[i];
+                profile.id = "profile" + i;
+
+                const closeButton = profile.querySelectorAll(".close-button")[0];
+                closeButton.onclick = function () { removeTutor(profile) };
             }
 
             mainSection.appendChild(fragment);
@@ -50,7 +56,7 @@ function loadProfiles() {
 
 //End Initialization Methods//
 const modal = document.getElementsByClassName("modal")[0];
-const activeFilters = new Array();
+const activeFilters = new Set();
 
 function toggleMainTab(tabButton, tabPane) {
     const tabButtons = document.querySelectorAll(".sidebar-nav button");
@@ -80,22 +86,20 @@ function toggleFilter(event) {
             return;
         }
         button.classList.remove("selected");
-
-        const index = activeFilters.indexOf(button);
-        activeFilters.splice(index, 1);
+        activeFilters.delete(button);
 
         setDeselected(button);
 
-        if (activeFilters.length < 1) {
+        if (activeFilters.size < 1) {
             allButton.classList.add("selected");
         }
 
     } else if (button === allButton) {
 
-        for (var i = 0; i < activeFilters.length; i++) {
-            activeFilters[i].classList.remove("selected");
+        for (var b of activeFilters.values()) {
+            b.classList.remove("selected");
         }
-        activeFilters.length = 0;
+        activeFilters.clear();
 
         button.classList.remove("deselected");
         button.classList.add("selected");
@@ -103,7 +107,7 @@ function toggleFilter(event) {
     } else {
         button.classList.remove("deselected");
         button.classList.add("selected");
-        activeFilters.push(button);
+        activeFilters.add(button);
 
         if (allButton.classList.contains("selected")) {
             allButton.classList.remove("selected");
@@ -128,6 +132,12 @@ function openAddTutorPopup() {
 
 function closeAddTutorPopup() {
     modal.style.display = "none";
+}
+
+function removeTutor(profile) {
+    if (confirm("Are you sure you want to remove this tutor's profile?")) {
+        profile.style.display = "none";
+    }
 }
 
 //Form Methods//

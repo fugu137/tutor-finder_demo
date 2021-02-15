@@ -214,7 +214,7 @@ main section {
     grid-row-gap: 30px;
     grid-column-gap: 30px;
     grid-template-columns: repeat(auto-fill, 500px);
-    margin: 30px 45px 30px 45px;
+    margin: 28px 45px 30px 45px;
     padding-left: 16px;
     justify-content: center;
     align-items: center;
@@ -233,10 +233,10 @@ main section {
     box-shadow: 0px 0px 6px 2px var(--background-blue-dark);
 }
 
-.profile:active {
+/* .profile:active {
     transform: scale(1.1);
     z-index: 1;
-}
+} */
 
 .profile img {
     position: absolute;
@@ -262,6 +262,7 @@ main section {
     position: absolute;
     top: 0px;
     left: 0px;
+    right: 0px;
     height: auto;
     display: block;
     padding-top: 13px;
@@ -276,7 +277,7 @@ main section {
     font-weight: 500;
 }
 
-.title-pane #email-pane {
+.title-pane .email-pane {
     display: block;
     width: 170px;
     font-size: 12px;
@@ -288,7 +289,7 @@ main section {
 .subjects-pane {
     position: absolute;
     left: 0px;
-    top: 72px;
+    top: 65px;
     right: 0px;
     height: auto;
     display: flex;
@@ -332,6 +333,27 @@ main section {
 
 .close-button:active {
     opacity: 1;
+}
+
+.profile .close-button {
+    top: 1px;
+    right: 1px;
+    display: none;
+    opacity: 0.4;
+    animation: fade-in 1s;
+    z-index: 1;
+}
+
+.profile .close-button:hover {
+    opacity: 0.7;
+}
+
+.profile .close-button:active {
+    opacity: 1;
+}
+
+.profile:hover .close-button {
+    display: block;
 }
 
 /* Book Tab */
@@ -534,6 +556,6 @@ main footer .load-button:active {
         opacity: 0;
     }
     to {
-        opacity: 1;
+        opacity: auto;
     }
 }
