@@ -4,6 +4,7 @@
 
 ![demo1.png](demo1.PNG)
 ![demo2.png](demo2.PNG)
+![demo3.png](demo3.png)
 
 ## Running Tutor Finder ##
 To run the application:
