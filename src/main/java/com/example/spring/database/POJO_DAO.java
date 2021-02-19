@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Repository("pojo_dao")
 public class POJO_DAO implements DAO {
@@ -117,5 +118,16 @@ public class POJO_DAO implements DAO {
     @Override
     public List<Tutor> selectAllTutors() {
         return tutorList;
+    }
+
+    @Override
+    public int removeTutor(UUID uid) {
+        for (Tutor t : tutorList) {
+            if (t.getId().equals(uid)) {
+                tutorList.remove(t);
+                return 1;
+            }
+        }
+        return -1;
     }
 }

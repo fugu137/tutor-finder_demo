@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TutorManager {
@@ -24,5 +25,9 @@ public class TutorManager {
 
     public List<Tutor> getAllTutors() {
         return dao.selectAllTutors();
+    }
+
+    public int removeTutor(UUID uid) {
+        return dao.removeTutor(uid);
     }
 }

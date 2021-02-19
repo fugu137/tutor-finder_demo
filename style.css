@@ -12,24 +12,25 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    font-size: 0;
 }
 
-.sidebar {
+.menubar {
     position: absolute;
-    top: 80px;
+    top: 30px;
     left: 0px;
-    width: 80px;
-    bottom: 0px;
+    height: 46px;
+    right: 0px;
     background-color: var(--mauve);
 }
 
 .topbar {
     position: absolute;
     top: 0px;
-    left: 80px;
+    left: 0px;
     right: 0px;
     text-align: right;
-    height: 40px;
+    height: 30px;
     background-color: white;
 }
 
@@ -37,22 +38,22 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 80px;
-    height: 80px;
+    height: 30px;
+    width: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--mauve);
     opacity: 0.4;
-    font-size: 36px;
+    font-size: 20px;
 }
 
 main {
     background-color: var(--background-blue);
     position: absolute;
-    top: 40px;
+    top: 80px;
     bottom: 0px;
-    left: 80px;
+    left: 0px;
     right: 0px;
     transition: 0.3s;
     overflow-y: scroll;
@@ -60,7 +61,7 @@ main {
 
 .tab {
     display: none;
-    height: 100%;
+    /* height: 100%; */
 }
 
 .tab.open {
@@ -69,7 +70,7 @@ main {
 
 .topbar-nav {
     position: relative;
-    padding-right: 80px;
+    padding-right: 15px;
     height: 100%;
     display: flex;
     justify-content: right;
@@ -77,8 +78,8 @@ main {
 }
 
 .topbar-nav button {
-    font-size: 0.5rem;
-    height: 30px;
+    font-size: 6px;
+    height: 25px;
     color: #000058;
     background-color: transparent;
     border: none;
@@ -97,27 +98,33 @@ main {
     margin-left: 2px;
 }
 
-.sidebar-nav button {
-    font-size: 0.55rem;
-    width: 80px;
-    height: 80px;
-    margin: 0px;
-    padding: 0px;
+.menubar-nav {
+    height: 100%;
+    width: 100%;
+}
+
+.menubar-nav button {
+    box-sizing: border-box;
+    font-size: 6px;
+    width: 54px;
+    height: 46px;
     background-color: var(--mauve);
     border: none;
     transition: 0.1s;
+    /* padding-bottom: 5px; */
 }
 
-.sidebar-nav button:hover {
+.menubar-nav button:hover {
     background-color: var(--mauve-dark);
 }
 
-.sidebar-nav button.current {
+.menubar-nav button.current {
     background-color: var(--mauve-dark);
-    border-left: 5px solid coral;
+    border-top: 3px solid var(--mauve-dark);
+    border-bottom: 3px solid coral;
 }
 
-.sidebar-nav i {
+.menubar-nav i {
     color: #F8F8F8;
     opacity: 0.85;
 }
@@ -128,27 +135,42 @@ main section {
 
 /* Browse Tab */
 
+#browse-tab {
+    position: relative;
+    margin-top: 98px;
+    padding-top: 0px;
+    height: 100%;
+}
+
 .filter-pane {
+    position: fixed;
+    top: 76px;
+    left: 0;
+    right: 0;
     display: flex;
     flex-wrap: wrap;
-    margin: 20px 20px 0px 20px;
+    padding: 12px 4px 12px 4px;
+    /* box-shadow: 0 2px 2px -2px var(--background-blue-dark); */
+    border-bottom: 1px solid var(--background-blue-dark);
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
+    background-color: var(--background-blue);
+    z-index: 2;
 }
 
 .filter-pane button {
     background-color: transparent;
-    font-size: 15px;
+    font-size: 13px;
     color: var(--background-grey-dark);
     flex: none;
     /* text-transform: uppercase; */
     border: 1px solid transparent;
-    padding: 0px 12px 1px 12px;
+    padding: 0px 8px 1px 8px;
     border-radius: 30px;
     transition: 0.3s;
     opacity: 0.7;
-    height: 23px;
+    height: 20px;
 }
 
 .filter-pane button:hover {
@@ -210,20 +232,17 @@ main section {
 
 .profile-pane {
     font-family: "Helvetica", sans-serif;
-    display: grid;
-    grid-row-gap: 30px;
-    grid-column-gap: 30px;
-    grid-template-columns: repeat(auto-fill, 500px);
-    margin: 28px 45px 30px 45px;
-    padding-left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
     justify-content: center;
     align-items: center;
 }
 
 .profile {
     background-color: white;
-    width: 500px;
-    height: 300px;
+    width: 360px;
+    height: 480px;
     transition: 0.3s;
     position: relative;
 }
@@ -242,17 +261,17 @@ main section {
     position: absolute;
     top: 0px;
     left: 0px;
-    height: 100%;
+    width: 100%;
     transition: 0.4s;
     /* border: 3px solid white; */
 }
 
 .info-popout {
     position: absolute;
-    top: 0px;
-    left: 300px;
-    width: 200px;
-    height: 100%;
+    top: 360px;
+    left: 0;
+    right: 0;
+    height: 200px;
     z-index: 1;
     transition: 0.4s;
     padding: 2px;
@@ -269,6 +288,7 @@ main section {
     margin-left: 10px;
     margin-right: 10px;
     transition: 0.4s;
+    text-align: center;
 }
 
 .title-pane h5 {
@@ -279,21 +299,23 @@ main section {
 
 .title-pane .email-pane {
     display: block;
-    width: 170px;
+    width: 100%;
     font-size: 12px;
     color: navy;
     margin-top: 5px;
     transition: 0.4s;
+    text-align: center;
 }
 
 .subjects-pane {
     position: absolute;
-    left: 0px;
+    left: 20px;
     top: 65px;
-    right: 0px;
+    right: 20px;
     height: auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 5px;
     margin-right: 10px;
     margin-left: 11px;
@@ -312,11 +334,11 @@ main section {
 }
 
 .subject-box:last-of-type {
-    flex-grow: 100000;
-    visibility: hidden;
+    display: none;
 }
 
 .close-button {
+    font-size: 14px;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -338,7 +360,7 @@ main section {
 .profile .close-button {
     top: 1px;
     right: 1px;
-    display: none;
+    display: block;
     opacity: 0.4;
     animation: fade-in 1s;
     z-index: 1;
@@ -360,23 +382,28 @@ main section {
 
 #book-tab {
     position: relative;
+    display: none;
+    justify-content: center;
+    align-items: center;
     min-height: 100%;
+    padding-bottom: 100px;
 }
 
 #book-tab .message-pane {
     display: flex;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
+    width: 260px;
     height: 40px;
-    margin-top: -40px;
-    margin-left: -150px;
-    margin-right: -150px;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
     border: 1px dashed var(--background-grey);
+}
+
+#book-tab .message-pane p {
+    font-size: 17px;
+}
+
+#book-tab.open {
+    display: flex;
 }
 
 /* Add Tutor Popup */
@@ -389,9 +416,11 @@ main section {
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.4);
-    z-index: 2;
-    overflow: auto;
+    z-index: 3;
+    overflow: scroll;
     transition: 1s;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-pane {
@@ -400,24 +429,26 @@ main section {
     text-align: left;
     display: block;
     background-color: white;
-    margin: 70px auto;
-    width: 670px;
-    padding: 50px;
+    height: auto;
+    width: 100%;
+    height: 100%;
+    padding: 15px 20px 15px 20px;
     animation: zoom-in 0.4s;
+    overflow: scroll;
 }
 
 .login-pane header {
     text-align: center;
-    margin-bottom: 25px;
-    margin-top: 5px;
+    padding-bottom: 10px;
 }
 
 .login-pane h3 {
-    font-weight: 500;
-    font-size: 22px;
+    font-weight: 400;
+    font-size: 18px;
 }
 
 form input[type=text], form input[type=email] {
+    font-size: 11px;
     width: 100%;
     padding: 5px 5px;
     margin-top: 5px;
@@ -426,18 +457,17 @@ form input[type=text], form input[type=email] {
 
 form label {
     margin: 10px 0px;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .submit-button {
     display: inline-block;
     width: 100%;
     height: 33px;
-    margin-top: 30px;
     margin-bottom: 15px;
     background-color: var(--comp-green);
     color: white;
-    font-size: 14px;
+    font-size: 12px;
     border: none;
     padding-bottom: 1px;
 }
@@ -451,7 +481,7 @@ form label {
 }
 
 #subjects {
-    margin: 20px 0px;
+    margin: 10px 0px;
     display: grid;
     grid-template-columns: auto auto auto auto;
     grid-gap: 8px 0px;
@@ -463,23 +493,18 @@ form label {
 
 #subjects label {
     margin-left: 4px;
+    font-size: 11px;
 }
 
-.filter-box {
-    margin-top: 15px;
-    margin-right: 46px;
-    margin-left: auto;
-    width: 170px;
-}
-
+/* 
 select {
     width: 120px
-}
+} */
 
 .upload {
     display: inline-block;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
@@ -497,7 +522,8 @@ select {
 }
 
 #upload-button {
-    margin: 15px 0px 20px 0px;
+    font-size: 12px;
+    margin: 10px 0px 15px 0px;
     max-width: 300px;
 }
 
@@ -512,6 +538,7 @@ select {
 }
 
 main footer {
+    margin-top: 40px;
     height: 60px;
     position: relative;
 }
@@ -523,7 +550,7 @@ main footer .load-button {
     background-color: transparent;
     margin-left: auto;
     margin-right: auto;
-    padding: 8px 16px 8px 16px;
+    padding: 7px 17px 7px 17px;
     border: 1px solid var(--background-grey-dark);
     color: var(--background-grey-dark);
     opacity: 0.8;
@@ -557,5 +584,194 @@ main footer .load-button:active {
     }
     to {
         opacity: auto;
+    }
+}
+
+@media (min-width: 700px) {
+    .menubar {
+        position: absolute;
+        top: 80px;
+        left: 0px;
+        right: auto;
+        bottom: 0px;
+        width: 80px;
+        height: auto;
+    }
+    .topbar {
+        position: absolute;
+        top: 0px;
+        left: 80px;
+        right: 0px;
+        text-align: right;
+        height: 40px;
+    }
+    .logobar {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.4;
+        font-size: 36px;
+    }
+    main {
+        top: 40px;
+        bottom: 0px;
+        left: 80px;
+        right: 0px;
+    }
+    .topbar-nav {
+        padding-right: 50px;
+    }
+    .topbar-nav button {
+        font-size: 7px;
+        height: 30px;
+    }
+    .menubar-nav {
+        width: 100%;
+        height: 100%;
+    }
+    .menubar-nav button {
+        font-size: 9px;
+        width: 80px;
+        height: 80px;
+        margin: 0px;
+        padding: 0px;
+    }
+    .menubar-nav button.current {
+        border-bottom: none;
+        border-top: none;
+        border-left: 5px solid coral;
+    }
+    .logobar {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 80px;
+        height: 80px;
+    }
+    #browse-tab {
+        margin-top: 0px;
+    }
+    .filter-pane {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        margin: 20px 20px 0px 20px;
+        border: none;
+    }
+    .filter-pane button {
+        font-size: 15px;
+        padding: 0px 12px 1px 12px;
+        height: 23px;
+    }
+    #book-tab .message-pane {
+        display: flex;
+        width: 280px;
+        height: 40px;
+        justify-content: center;
+        align-items: center;
+        border: 1px dashed var(--background-grey);
+    }
+    #book-tab .message-pane p {
+        font-size: 20px;
+    }
+    .profile-pane {
+        display: grid;
+        grid-row-gap: 30px;
+        grid-column-gap: 30px;
+        grid-template-columns: repeat(auto-fill, 500px);
+        margin: 28px 45px 30px 45px;
+        padding-left: 16px;
+        justify-content: center;
+        align-items: center;
+    }
+    .profile {
+        width: 500px;
+        height: 300px;
+    }
+    .profile img {
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        width: auto;
+    }
+    .info-popout {
+        top: 0px;
+        left: 300px;
+        width: 200px;
+        height: 100%;
+    }
+    .title-pane h5 {
+        text-align: left;
+    }
+    .title-pane .email-pane {
+        text-align: left;
+    }
+    .subjects-pane {
+        left: 0px;
+        top: 65px;
+        right: 0px;
+        height: auto;
+    }
+    .subject-box:last-of-type {
+        display: block;
+        flex-grow: 100000;
+        visibility: hidden;
+    }
+    .profile .close-button {
+        display: none;
+    }
+    .login-pane {
+        margin: 70px auto;
+        width: 670px;
+        height: auto;
+        padding: 50px;
+        overflow: hidden;
+    }
+    .login-pane header {
+        text-align: center;
+        margin-bottom: 25px;
+        margin-top: 5px;
+    }
+    .login-pane h3 {
+        font-weight: 500;
+        font-size: 22px;
+    }
+    form input[type=text], form input[type=email] {
+        font-size: 13px;
+        padding: 5px 5px;
+        margin-top: 5px;
+        margin-bottom: 12px;
+    }
+    form label {
+        font-size: 14px;
+    }
+    .submit-button {
+        margin-top: 30px;
+        font-size: 14px;
+    }
+    #subjects {
+        margin: 20px 0px;
+        grid-gap: 8px 0px;
+    }
+    #subjects label {
+        margin-left: 4px;
+        font-size: 14px;
+    }
+    .upload {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    #upload-label {
+        font-size: 14px;
+    }
+    #upload-button {
+        font-size: 14px;
+        margin: 15px 0px 20px 0px;
     }
 }

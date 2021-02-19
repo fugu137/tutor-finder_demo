@@ -1,5 +1,6 @@
 //Initialization Methods//
 const url = new URL("http://localhost:8080/api/tutor");
+const idTable = new Map();
 
 loadProfiles();
 
@@ -20,15 +21,16 @@ function loadProfiles() {
                 const email = data[i].email;
                 const subjects = data[i].subjects;
                 const imagePath = data[i].imagePath;
+                const id = data[i].id;
 
                 const profileFrag = document.querySelectorAll(".profile-template")[0].content.cloneNode(true);
                 profileFrag.querySelectorAll(".title-pane h5")[0].textContent = firstName + " " + surname;
                 profileFrag.querySelectorAll(".email-pane")[0].textContent = email;
 
                 const subjectsPane = profileFrag.querySelectorAll(".subjects-pane")[0];
+                const blankBox = profileFrag.querySelectorAll(".subject-box")[0];
 
                 for (var j = 0; j < subjects.length; j++) {
-                    const blankBox = profileFrag.querySelectorAll(".subject-box")[0];
                     const subjectBox = blankBox.cloneNode(true);
                     subjectBox.textContent = subjects[j];
                     subjectsPane.insertBefore(subjectBox, blankBox);
@@ -42,7 +44,9 @@ function loadProfiles() {
                 profilePane.appendChild(profileFrag);
 
                 const profile = profilePane.getElementsByClassName("profile")[i];
-                profile.id = "profile" + i;
+                const name = "profile" + i;
+                profile.id = name;
+                idTable.set(name, id);
 
                 const closeButton = profile.querySelectorAll(".close-button")[0];
                 closeButton.onclick = function () { removeTutor(profile) };
@@ -59,7 +63,7 @@ const modal = document.getElementsByClassName("modal")[0];
 const activeFilters = new Set();
 
 function toggleMainTab(tabButton, tabPane) {
-    const tabButtons = document.querySelectorAll(".sidebar-nav button");
+    const tabButtons = document.querySelectorAll(".menubar-nav button");
     const tabPanes = document.querySelectorAll(".tab");
 
     for (var i = 0; i < tabButtons.length; i++) {
@@ -127,16 +131,30 @@ function setDeselected(button) {
 
 
 function openAddTutorPopup() {
-    modal.style.display = "block";
+    modal.style.display = "flex";
 }
 
 function closeAddTutorPopup() {
     modal.style.display = "none";
 }
 
-function removeTutor(profile) {
+async function removeTutor(profile) {
     if (confirm("Are you sure you want to remove this tutor's profile?")) {
-        profile.style.display = "none";
+        const id = idTable.get(profile.id);
+
+        fetch(url + "/" + id, {
+            method: "DELETE",
+            body: null
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Error: " + error);
+            });
+
     }
 }
 

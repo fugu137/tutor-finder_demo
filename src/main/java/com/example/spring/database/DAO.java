@@ -9,4 +9,5 @@ public interface DAO {
 
     int insertTutor(Tutor tutor);
     List<Tutor> selectAllTutors();
+    int removeTutor(UUID uid);
 }

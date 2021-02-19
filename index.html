@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>Tutor Finder</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
   <link rel="stylesheet" href="style.css">
@@ -11,8 +11,8 @@
 </head>
 
 <body>
-  <header class="sidebar">
-    <nav class="sidebar-nav">
+  <header class="menubar">
+    <nav class="menubar-nav">
       <button title="Browse Tutors" class="current" onclick="toggleMainTab(this, 'browse-tab')">
         <i class="far fa-address-book fa-4x"></i>
       </button>
@@ -101,10 +101,10 @@
 
       <form>
         <label>First Name: </label>
-        <input id="firstname" placeholder="Enter First Name" type="text" name="firstName" required>
+        <input id="firstname" placeholder="Enter First Name" type="text" name="firstName" pattern=".{1,}" required>
 
         <label>Last Name: </label>
-        <input id="lastname" placeholder="Enter Surname" type="text" name="surname" required>
+        <input id="lastname" placeholder="Enter Surname" type="text" name="surname" pattern=".{1,}" required>
 
         <label>Email Address: </label>
         <input id="email" placeholder="Enter Email Address" type="email" name="email" required>
