@@ -5,10 +5,10 @@
 #### Browse Tutors ####
 ![demo1.png](demo1.PNG)
 
-#### Add Tutors #####
+#### Add Tutors ####
 ![demo2.png](demo2.PNG)
 
-### Browse on Mobile ###
+#### Browse on Mobile ####
 ![demo3.png](demo3.png)
 
 ## Running Tutor Finder ##
