@@ -57,6 +57,8 @@ main {
     right: 0px;
     transition: 0.3s;
     overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-padding: 98px;
 }
 
 .tab {
@@ -138,8 +140,7 @@ main section {
 #browse-tab {
     position: relative;
     margin-top: 98px;
-    padding-top: 0px;
-    height: 100%;
+    height: auto;
 }
 
 .filter-pane {
@@ -245,6 +246,7 @@ main section {
     height: 480px;
     transition: 0.3s;
     position: relative;
+    scroll-snap-align: start;
 }
 
 .profile:hover {
@@ -622,6 +624,7 @@ main footer .load-button:active {
         bottom: 0px;
         left: 80px;
         right: 0px;
+        scroll-snap-type: none;
     }
     .topbar-nav {
         padding-right: 50px;
