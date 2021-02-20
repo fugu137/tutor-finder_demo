@@ -2,8 +2,14 @@
 
 *Tutor Finder is a web application built using Spring Boot, Javascript, and CSS. The application allows users to store and load information about tutors via their web browser.*
 
+#### Browse Tutors ####
 ![demo1.png](demo1.PNG)
+
+#### Add Tutors ####
 ![demo2.png](demo2.PNG)
+
+#### Browse on Mobile ####
+![demo3.png](demo3.png)
 
 ## Running Tutor Finder ##
 To run the application:
