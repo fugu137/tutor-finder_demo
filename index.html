@@ -66,7 +66,7 @@
       </template>
 
       <template class="profile-template">
-        <article class="profile" onclick="alert('No tutor details to see in demo version!\nIn the finished product, users would be able to see a popup window with full tutor details.')">
+        <article class="profile" onclick="openTutorDetails(event)">
           <img class="profile-pic" src="src/main/resources/static/profile_images/default_profile_image.png">
           <div class="info-popout">
             <header class="title-pane">
@@ -160,7 +160,7 @@
           <label id="upload-label">Upload a profile picture</label>
           <img id="preview"
             src="https://images.pexels.com/photos/5810306/pexels-photo-5810306.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260">
-          <input id="upload-button" type="file" accept="image/*" onchange="previewImg(this)"></input>
+          <input id="upload-button" type="file" accept="image/*" onchange="previewImg(this)">
         </div>
 
         <button id="submit-button" class="submit-button" type="button" onclick="processForm()">Submit

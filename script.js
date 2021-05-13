@@ -158,6 +158,12 @@ async function removeTutor(profile) {
     }
 }
 
+function openTutorDetails(event) {
+    if (event.target.className !== "close-button") {
+        alert('No tutor details to see in demo version!\nIn the finished product, users would be able to see a popup window with full tutor details.')
+    }
+}
+
 //Form Methods//
 var fileList;
 
