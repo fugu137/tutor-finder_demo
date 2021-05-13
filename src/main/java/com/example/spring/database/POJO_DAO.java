@@ -4,7 +4,6 @@ import com.example.spring.model.Tutor;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +27,7 @@ public class POJO_DAO implements DAO {
         subjects.add("French");
         subjects.add("Arabic");
         emily.addSubjects(subjects);
-        emily.setImagePath("sample_f1.jpeg");
+        emily.setImagePathByName("sample_f1.jpeg");
 
         Tutor max = new Tutor("Max", "Favwell", "max.favwell@mail.com", null, null);
         subjects = new ArrayList<>();
@@ -37,7 +36,7 @@ public class POJO_DAO implements DAO {
         subjects.add("Biology");
         subjects.add("Economics");
         max.addSubjects(subjects);
-        max.setImagePath("sample_m1.jpeg");
+        max.setImagePathByName("sample_m1.jpeg");
 
         Tutor carrie = new Tutor("Carrie", "Walsh", "cwalsh@mail.com", null, null);
         subjects = new ArrayList<>();
@@ -48,7 +47,7 @@ public class POJO_DAO implements DAO {
         subjects.add("History");
         subjects.add("Japanese");
         carrie.addSubjects(subjects);
-        carrie.setImagePath("sample_f2.jpeg");
+        carrie.setImagePathByName("sample_f2.jpeg");
 
         Tutor howard = new Tutor("Howard", "Jackson", "hholt@mail.com", null, null);
         subjects = new ArrayList<>();
@@ -57,7 +56,7 @@ public class POJO_DAO implements DAO {
         subjects.add("German");
         subjects.add("History");
         howard.addSubjects(subjects);
-        howard.setImagePath("sample_m2.jpeg");
+        howard.setImagePathByName("sample_m2.jpeg");
 
         Tutor mary = new Tutor("Mary", "Abdul", "maryab@mail.com", null, null);
         subjects = new ArrayList<>();
@@ -65,7 +64,7 @@ public class POJO_DAO implements DAO {
         subjects.add("History");
         subjects.add("Geography");
         mary.addSubjects(subjects);
-        mary.setImagePath("sample_f3.webp");
+        mary.setImagePathByName("sample_f3.webp");
 
         Tutor jeremy = new Tutor("Jeremy", "Jones", "j.jones@mail.com", null, null);
         subjects = new ArrayList<>();
@@ -76,7 +75,7 @@ public class POJO_DAO implements DAO {
         subjects.add("Chemistry");
         subjects.add("Mathematics");
         jeremy.addSubjects(subjects);
-        jeremy.setImagePath("sample_m3.jpeg");
+        jeremy.setImagePathByName("sample_m3.jpeg");
 
         Tutor jane = new Tutor("Jane", "Yi", "janeyi@mail.com", null, null);
         subjects = new ArrayList<>();
@@ -86,7 +85,7 @@ public class POJO_DAO implements DAO {
         subjects.add("Mathematics");
         subjects.add("Economics");
         jane.addSubjects(subjects);
-        jane.setImagePath("sample_f4.jpeg");
+        jane.setImagePathByName("sample_f4.jpeg");
 
         Tutor harry = new Tutor("Harry", "Bishop", "harryb@gmail.com", null, null);
         subjects = new ArrayList<>();
@@ -94,7 +93,7 @@ public class POJO_DAO implements DAO {
         subjects.add("Physics");
         subjects.add("Geology");
         harry.addSubjects(subjects);
-        harry.setImagePath("sample_m4.webp");
+        harry.setImagePathByName("sample_m4.webp");
 
         tutorList.add(emily);
         tutorList.add(max);

@@ -1,12 +1,8 @@
 package com.example.spring.model;
 
-
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-
-import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,7 +12,7 @@ import java.util.UUID;
 
 public class Tutor {
 
-    private final UUID id;
+    private UUID id;
     private String firstName;
     private String surname;
     private String email;
@@ -24,13 +20,12 @@ public class Tutor {
     private String imagePath;
 
     public Tutor(String firstName, String surname, String email, String subjects, MultipartFile picture) throws IOException {
-        this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
         this.subjects = new ArrayList<>();
         processSubjectsString(subjects);
-        setImagePath(picture);
+        addImage(picture);
     }
 
     private void processSubjectsString(String subjects) {
@@ -48,6 +43,13 @@ public class Tutor {
 
     public UUID getId() {
         return id;
+    }
+
+    public void setId() {
+        this.id = UUID.randomUUID();
+    }
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -86,7 +88,11 @@ public class Tutor {
         return imagePath;
     }
 
-    public void setImagePath(MultipartFile picture) throws IOException {
+    public void setImagePath(String path) {
+        this.imagePath = path;
+    }
+
+    public void addImage(MultipartFile picture) throws IOException {
         if (picture == null) {
             this.imagePath = null;
             return;
@@ -117,7 +123,7 @@ public class Tutor {
     }
 
     //TODO: remove this temporary method//
-    public void setImagePath(String pictureName) {
+    public void setImagePathByName(String pictureName) {
         String directory = "src/main/resources/static/profile_images/";
         this.imagePath = directory + pictureName;
     }
