@@ -116,7 +116,21 @@ public class POJO_DAO implements DAO {
 
     @Override
     public List<Tutor> selectAllTutors(int fromIndex, int numberOfTutors) {
-        return tutorList.subList(fromIndex, fromIndex + numberOfTutors);
+        int toIndex = fromIndex + numberOfTutors;
+
+        System.out.println("From: " + fromIndex);
+        System.out.println("To: " + toIndex);
+        System.out.println("Tutor List size: " + tutorList.size());
+
+        if (fromIndex < tutorList.size() && toIndex < tutorList.size()) {   // fromIndex is indexed to 1, so we need to subtract 1 to 0 index it
+            return tutorList.subList(fromIndex, toIndex);
+
+        } else if (fromIndex < tutorList.size()) {
+            return tutorList.subList(fromIndex, tutorList.size());
+
+        } else {
+            return null;
+        }
     }
 
     @Override
