@@ -210,7 +210,7 @@ function submitTutor(firstName, surname, email, subjects, picture) {
     formData.append("firstName", firstName);
     formData.append("surname", surname);
     formData.append("email", email);
-    formData.append("subjects", subjects);
+    subjects.forEach( (subject) => formData.append("subjects", subject));
 
     if (picture !== undefined) {
         formData.append("picture", picture);

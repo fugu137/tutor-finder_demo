@@ -54,9 +54,60 @@ public class MySQL_DAO implements DAO {
             carrie.addSubjects(subjects);
             carrie.setImagePathByName("sample_f2.jpeg");
 
+            Tutor howard = new Tutor("Howard", "Jackson", "hholt@mail.com", null, null);
+            subjects = new ArrayList<>();
+            subjects.add("Photography");
+            subjects.add("Geology");
+            subjects.add("German");
+            subjects.add("History");
+            howard.addSubjects(subjects);
+            howard.setImagePathByName("sample_m2.jpeg");
+
+            Tutor mary = new Tutor("Mary", "Abdul", "maryab@mail.com", null, null);
+            subjects = new ArrayList<>();
+            subjects.add("Photography");
+            subjects.add("History");
+            subjects.add("Geography");
+            mary.addSubjects(subjects);
+            mary.setImagePathByName("sample_f3.webp");
+
+            Tutor jeremy = new Tutor("Jeremy", "Jones", "j.jones@mail.com", null, null);
+            subjects = new ArrayList<>();
+            subjects.add("Geography");
+            subjects.add("German");
+            subjects.add("History");
+            subjects.add("Physics");
+            subjects.add("Chemistry");
+            subjects.add("Mathematics");
+            jeremy.addSubjects(subjects);
+            jeremy.setImagePathByName("sample_m3.jpeg");
+
+            Tutor jane = new Tutor("Jane", "Yi", "janeyi@mail.com", null, null);
+            subjects = new ArrayList<>();
+            subjects.add("Geography");
+            subjects.add("Physics");
+            subjects.add("Chemistry");
+            subjects.add("Mathematics");
+            subjects.add("Economics");
+            jane.addSubjects(subjects);
+            jane.setImagePathByName("sample_f4.jpeg");
+
+            Tutor harry = new Tutor("Harry", "Bishop", "harryb@gmail.com", null, null);
+            subjects = new ArrayList<>();
+            subjects.add("Geography");
+            subjects.add("Physics");
+            subjects.add("Geology");
+            harry.addSubjects(subjects);
+            harry.setImagePathByName("sample_m4.webp");
+
             insertTutor(emily);
             insertTutor(max);
             insertTutor(carrie);
+            insertTutor(howard);
+            insertTutor(mary);
+            insertTutor(jeremy);
+            insertTutor(jane);
+            insertTutor(harry);
 
         } catch (IOException | SQLException e) {
             e.printStackTrace();
