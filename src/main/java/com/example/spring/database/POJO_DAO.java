@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Repository("pojo_dao")
@@ -115,7 +116,7 @@ public class POJO_DAO implements DAO {
     }
 
     @Override
-    public List<Tutor> selectAllTutors(int fromIndex, int numberOfTutors) {
+    public List<Tutor> selectAllTutors(int fromIndex, int numberOfTutors, String[] filters) {
         int toIndex = fromIndex + numberOfTutors;
 
         System.out.println("From: " + fromIndex);

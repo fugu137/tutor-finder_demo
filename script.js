@@ -1,6 +1,7 @@
 //Initialization Methods & Variables//
 const url = new URL("http://localhost:8080/api/tutor");
 const idTable = new Map();
+const activeFilters = new Set();
 const profilesPerPage = 9;
 let pages = 0;
 
@@ -11,9 +12,17 @@ function loadProfiles(fromIndex, footer) {
     const fragment = document.querySelectorAll(".section-template")[0].content.cloneNode(true);
     const loadButton = fragment.querySelectorAll(".load-button")[0];
 
+    const filters = new Array(activeFilters.size);
+    let i = 0;
+    activeFilters.forEach(f => {
+        filters[i] = f.value;
+        i++;
+    });
+
     fetch(url + "?" + new URLSearchParams({
         fromIndex: fromIndex,
         numberOfTutors: profilesPerPage + 1,    //We get one extra profile so we know if the load button should be available to load more profiles
+        filters: filters,
     }))
         .then(function (response) {
             return response.json();
@@ -77,7 +86,6 @@ function loadProfiles(fromIndex, footer) {
 
 //End Initialization Methods//
 const modal = document.getElementsByClassName("modal")[0];
-const activeFilters = new Set();
 
 function toggleMainTab(tabButton, tabPane) {
     const tabButtons = document.querySelectorAll(".menubar-nav button");
@@ -134,6 +142,14 @@ function toggleFilter(event) {
             allButton.classList.remove("selected");
         }
     }
+
+    console.log("FILTER TOGGLE");
+    const fromIndex = (pages - 1) * profilesPerPage;
+    console.log("pages: " + pages);
+    console.log("fromindex:" + fromIndex);
+
+    clearProfiles();
+    loadProfiles(fromIndex);
 }
 
 
@@ -257,5 +273,16 @@ function refreshProfiles() {
 
     const mainFooter = document.querySelectorAll("main footer")[0];
     mainFooter.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function clearProfiles() {
+    const mainSection = document.getElementById("browse-tab");
+    const profilePanes = mainSection.querySelectorAll(".profile-pane, footer");
+    console.log(profilePanes)
+
+    mainSection.querySelector(".load-button").style.display = "none";
+    profilePanes.forEach(p => mainSection.removeChild(p));
+
+    pages = 0;
 }
 //End Form Methods//

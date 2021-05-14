@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -25,8 +26,8 @@ public class TutorManager {
         return dao.insertTutor(tutor);
     }
 
-    public List<Tutor> getAllTutors(int fromIndex, int toIndex) throws IOException, SQLException {
-        return dao.selectAllTutors(fromIndex, toIndex);
+    public List<Tutor> getAllTutors(int fromIndex, int toIndex, String[] filters) throws IOException, SQLException {
+        return dao.selectAllTutors(fromIndex, toIndex, filters);
     }
 
     public int removeTutor(UUID uid) throws SQLException {

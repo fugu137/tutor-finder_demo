@@ -8,9 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Repository("sql_dao")
 public class MySQL_DAO implements DAO {
@@ -145,11 +143,46 @@ public class MySQL_DAO implements DAO {
     }
 
     @Override
-    public List<Tutor> selectAllTutors(int fromIndex, int numberOfTutors) throws SQLException, IOException {
-        String query = "SELECT * FROM tutors LIMIT ? OFFSET ?";
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, numberOfTutors);
-        ps.setInt(2, fromIndex);
+    public List<Tutor> selectAllTutors(int fromIndex, int numberOfTutors, String[] filters) throws SQLException, IOException {
+        int filterCount = filters.length;
+        System.out.println("fromIndex " + fromIndex);
+
+        String query;
+        PreparedStatement ps;
+
+        if (filterCount > 0) {
+            StringBuilder querySB = new StringBuilder();
+            querySB.append("SELECT uuid, firstname, lastname, email,imageURL FROM tutors_subjects " +
+                    "JOIN tutors ON tutors.uuid = tutors_subjects.tutorid WHERE subject IN(");
+
+            String list = "?, ".repeat(filterCount);
+            list = list.replaceAll(", $", "");
+            querySB.append(list);
+
+            querySB.append(") GROUP BY tutors_subjects.tutorid HAVING COUNT(tutorid) = ? LIMIT ? OFFSET ?;");
+            query = querySB.toString();
+
+            ps = con.prepareStatement(query);
+
+            for (int i = 0; i < filterCount; i++) {
+                ps.setString(i + 1, filters[i]);
+            }
+
+            ps.setInt(filterCount + 1, filterCount);
+            ps.setInt(filterCount + 2, numberOfTutors);
+            ps.setInt(filterCount + 3, fromIndex);
+
+        } else {
+            query = "SELECT * FROM tutors LIMIT ? OFFSET ?;";
+            ps = con.prepareStatement(query);
+
+            ps.setInt(1, numberOfTutors);
+            ps.setInt(2, fromIndex);
+        }
+
+        System.out.println(query);
+        System.out.println("PrepState: " + ps);
+
         ResultSet rs = ps.executeQuery();
 
         List<Tutor> tutors = new ArrayList<>();
