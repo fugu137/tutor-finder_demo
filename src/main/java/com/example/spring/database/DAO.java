@@ -10,6 +10,6 @@ import java.util.UUID;
 public interface DAO {
 
     int insertTutor(Tutor tutor) throws SQLException;
-    List<Tutor> selectAllTutors() throws SQLException, IOException;
+    List<Tutor> selectAllTutors(int fromIndex, int toIndex) throws SQLException, IOException;
     int removeTutor(UUID uid) throws SQLException;
 }

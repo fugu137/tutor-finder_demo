@@ -1,21 +1,30 @@
-//Initialization Methods//
+//Initialization Methods & Variables//
 const url = new URL("http://localhost:8080/api/tutor");
 const idTable = new Map();
+const profilesPerPage = 9;
+let pages = 0;
 
-loadProfiles();
+loadProfiles(0);
 
-function loadProfiles() {
+function loadProfiles(fromIndex, footer) {
     const mainSection = document.getElementById("browse-tab");
     const fragment = document.querySelectorAll(".section-template")[0].content.cloneNode(true);
+    const loadButton = fragment.querySelectorAll(".load-button")[0];
 
-
-    fetch(url)
+    fetch(url + "?" + new URLSearchParams({
+        fromIndex: fromIndex,
+        numberOfTutors: profilesPerPage + 1,    //We get one extra profile so we know if the load button should be available to load more profiles
+    }))
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
+            if (data.length < 1) {
+                console.log("No tutors found!");
+                return;
+            }
 
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length && i < profilesPerPage; i++) {
                 const firstName = data[i].firstName;
                 const surname = data[i].surname;
                 const email = data[i].email;
@@ -53,8 +62,16 @@ function loadProfiles() {
             }
 
             mainSection.appendChild(fragment);
-        });
+            pages++;
 
+            if (data.length === profilesPerPage + 1) {  // Checks if we got more profiles than are displayed. If yes, then shows load button
+                loadButton.style.display = "block";
+            }
+
+            if (footer !== null && footer !== undefined) {
+                footer.parentElement.removeChild(footer);
+            }
+        });
 }
 
 
@@ -129,6 +146,11 @@ function setDeselected(button) {
 }
 //End Helper Functions//
 
+function loadMoreProfiles(button) {
+    fromIndex = pages * profilesPerPage;
+    const footer = button.parentElement;
+    loadProfiles(fromIndex, footer);
+}
 
 function openAddTutorPopup() {
     modal.style.display = "flex";

@@ -25,8 +25,8 @@ public class TutorManager {
         return dao.insertTutor(tutor);
     }
 
-    public List<Tutor> getAllTutors() throws IOException, SQLException {
-        return dao.selectAllTutors();
+    public List<Tutor> getAllTutors(int fromIndex, int toIndex) throws IOException, SQLException {
+        return dao.selectAllTutors(fromIndex, toIndex);
     }
 
     public int removeTutor(UUID uid) throws SQLException {

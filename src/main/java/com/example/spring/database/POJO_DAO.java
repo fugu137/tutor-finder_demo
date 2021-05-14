@@ -115,8 +115,8 @@ public class POJO_DAO implements DAO {
     }
 
     @Override
-    public List<Tutor> selectAllTutors() {
-        return tutorList;
+    public List<Tutor> selectAllTutors(int fromIndex, int numberOfTutors) {
+        return tutorList.subList(fromIndex, fromIndex + numberOfTutors);
     }
 
     @Override

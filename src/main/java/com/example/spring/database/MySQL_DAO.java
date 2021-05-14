@@ -145,9 +145,11 @@ public class MySQL_DAO implements DAO {
     }
 
     @Override
-    public List<Tutor> selectAllTutors() throws SQLException, IOException {
-        String query = "SELECT * FROM tutors";
+    public List<Tutor> selectAllTutors(int fromIndex, int numberOfTutors) throws SQLException, IOException {
+        String query = "SELECT * FROM tutors LIMIT ? OFFSET ?";
         PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, numberOfTutors);
+        ps.setInt(2, fromIndex);
         ResultSet rs = ps.executeQuery();
 
         List<Tutor> tutors = new ArrayList<>();

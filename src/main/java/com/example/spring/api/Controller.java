@@ -35,9 +35,9 @@ public class Controller {
     }
 
     @GetMapping(value = "/tutor")
-    public List<Tutor> getAllTutors() {
+    public List<Tutor> getAllTutors(int fromIndex, int numberOfTutors) {
         try {
-            return tutorManager.getAllTutors();
+            return tutorManager.getAllTutors(fromIndex, numberOfTutors);
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
