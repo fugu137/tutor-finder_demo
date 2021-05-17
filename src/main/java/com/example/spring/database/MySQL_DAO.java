@@ -15,102 +15,6 @@ public class MySQL_DAO implements DAO {
 
     private static Connection con = DatabaseConnection.getConnection();
 
-    public MySQL_DAO() {
-        addSampleData();
-    }
-
-    //    TODO: remove sample data below
-    private void addSampleData() {
-        try {
-            Tutor emily = new Tutor("Emily", "Falah", "emily.falah@mail.com", null, null);
-            List<String> subjects = new ArrayList<>();
-            subjects.add("Art");
-            subjects.add("Photography");
-            subjects.add("English");
-            subjects.add("French");
-            subjects.add("Arabic");
-            emily.addSubjects(subjects);
-            emily.setImagePathByName("sample_f1.jpeg");
-
-            Tutor max = new Tutor("Max", "Favwell", "max.favwell@mail.com", null, null);
-            subjects = new ArrayList<>();
-            subjects.add("Physics");
-            subjects.add("Chemistry");
-            subjects.add("Biology");
-            subjects.add("Economics");
-            max.addSubjects(subjects);
-            max.setImagePathByName("sample_m1.jpeg");
-
-            Tutor carrie = new Tutor("Carrie", "Walsh", "cwalsh@mail.com", null, null);
-            subjects = new ArrayList<>();
-            subjects.add("Art");
-            subjects.add("Photography");
-            subjects.add("Geography");
-            subjects.add("German");
-            subjects.add("History");
-            subjects.add("Japanese");
-            carrie.addSubjects(subjects);
-            carrie.setImagePathByName("sample_f2.jpeg");
-
-            Tutor howard = new Tutor("Howard", "Jackson", "hholt@mail.com", null, null);
-            subjects = new ArrayList<>();
-            subjects.add("Photography");
-            subjects.add("Geology");
-            subjects.add("German");
-            subjects.add("History");
-            howard.addSubjects(subjects);
-            howard.setImagePathByName("sample_m2.jpeg");
-
-            Tutor mary = new Tutor("Mary", "Abdul", "maryab@mail.com", null, null);
-            subjects = new ArrayList<>();
-            subjects.add("Photography");
-            subjects.add("History");
-            subjects.add("Geography");
-            mary.addSubjects(subjects);
-            mary.setImagePathByName("sample_f3.webp");
-
-            Tutor jeremy = new Tutor("Jeremy", "Jones", "j.jones@mail.com", null, null);
-            subjects = new ArrayList<>();
-            subjects.add("Geography");
-            subjects.add("German");
-            subjects.add("History");
-            subjects.add("Physics");
-            subjects.add("Chemistry");
-            subjects.add("Mathematics");
-            jeremy.addSubjects(subjects);
-            jeremy.setImagePathByName("sample_m3.jpeg");
-
-            Tutor jane = new Tutor("Jane", "Yi", "janeyi@mail.com", null, null);
-            subjects = new ArrayList<>();
-            subjects.add("Geography");
-            subjects.add("Physics");
-            subjects.add("Chemistry");
-            subjects.add("Mathematics");
-            subjects.add("Economics");
-            jane.addSubjects(subjects);
-            jane.setImagePathByName("sample_f4.jpeg");
-
-            Tutor harry = new Tutor("Harry", "Bishop", "harryb@gmail.com", null, null);
-            subjects = new ArrayList<>();
-            subjects.add("Geography");
-            subjects.add("Physics");
-            subjects.add("Geology");
-            harry.addSubjects(subjects);
-            harry.setImagePathByName("sample_m4.webp");
-
-            insertTutor(emily);
-            insertTutor(max);
-            insertTutor(carrie);
-            insertTutor(howard);
-            insertTutor(mary);
-            insertTutor(jeremy);
-            insertTutor(jane);
-            insertTutor(harry);
-
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public int insertTutor(Tutor tutor) throws SQLException {
@@ -145,7 +49,6 @@ public class MySQL_DAO implements DAO {
     @Override
     public List<Tutor> selectAllTutors(int fromIndex, int numberOfTutors, String[] filters) throws SQLException, IOException {
         int filterCount = filters.length;
-        System.out.println("fromIndex " + fromIndex);
 
         String query;
         PreparedStatement ps;
@@ -179,9 +82,9 @@ public class MySQL_DAO implements DAO {
             ps.setInt(1, numberOfTutors);
             ps.setInt(2, fromIndex);
         }
-
-        System.out.println(query);
-        System.out.println("PrepState: " + ps);
+//
+//        System.out.println(query);
+//        System.out.println("PrepState: " + ps);
 
         ResultSet rs = ps.executeQuery();
 

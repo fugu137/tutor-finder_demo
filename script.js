@@ -28,11 +28,6 @@ function loadProfiles(fromIndex, footer) {
             return response.json();
         })
         .then(function (data) {
-            if (data.length < 1) {
-                console.log("No tutors found!");
-                return;
-            }
-
             for (var i = 0; i < data.length && i < profilesPerPage; i++) {
                 const firstName = data[i].firstName;
                 const surname = data[i].surname;
@@ -143,13 +138,8 @@ function toggleFilter(event) {
         }
     }
 
-    console.log("FILTER TOGGLE");
-    const fromIndex = (pages - 1) * profilesPerPage;
-    console.log("pages: " + pages);
-    console.log("fromindex:" + fromIndex);
-
     clearProfiles();
-    loadProfiles(fromIndex);
+    loadProfiles(0);
 }
 
 
