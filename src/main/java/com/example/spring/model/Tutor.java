@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,26 +20,15 @@ public class Tutor {
     private final List<String> subjects;
     private String imagePath;
 
-    public Tutor(String firstName, String surname, String email, String subjects, MultipartFile picture) throws IOException {
+    public Tutor(String firstName, String surname, String email, List<String> subjects, MultipartFile picture) throws IOException {
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
         this.subjects = new ArrayList<>();
-        processSubjectsString(subjects);
+        if (subjects != null) {
+            this.subjects.addAll(subjects);
+        }
         addImage(picture);
-    }
-
-    private void processSubjectsString(String subjects) {
-        if (subjects == null) {
-            return;
-        }
-
-        String[] array = subjects.split(",");
-        for (int i = 0; i < array.length; i++) {
-            if (!array[i].isBlank()) {
-                this.subjects.add(array[i]);
-            }
-        }
     }
 
     public UUID getId() {
@@ -108,7 +98,7 @@ public class Tutor {
         String extension = "." + parts[parts.length - 1];
 
         String directory = "src/main/resources/static/profile_images/";
-        String relativePath = directory + this.id + extension;
+        String relativePath = directory + this.email + extension;
         Path path = Paths.get(relativePath);
 
         byte[] bytes = picture.getBytes();

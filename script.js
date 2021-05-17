@@ -1,21 +1,34 @@
-//Initialization Methods//
+//Initialization Methods & Variables//
 const url = new URL("http://localhost:8080/api/tutor");
 const idTable = new Map();
+const activeFilters = new Set();
+const profilesPerPage = 9;
+let pages = 0;
 
-loadProfiles();
+loadProfiles(0);
 
-function loadProfiles() {
+function loadProfiles(fromIndex, footer) {
     const mainSection = document.getElementById("browse-tab");
     const fragment = document.querySelectorAll(".section-template")[0].content.cloneNode(true);
+    const loadButton = fragment.querySelectorAll(".load-button")[0];
 
+    const filters = new Array(activeFilters.size);
+    let i = 0;
+    activeFilters.forEach(f => {
+        filters[i] = f.value;
+        i++;
+    });
 
-    fetch(url)
+    fetch(url + "?" + new URLSearchParams({
+        fromIndex: fromIndex,
+        numberOfTutors: profilesPerPage + 1,    //We get one extra profile so we know if the load button should be available to load more profiles
+        filters: filters,
+    }))
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length && i < profilesPerPage; i++) {
                 const firstName = data[i].firstName;
                 const surname = data[i].surname;
                 const email = data[i].email;
@@ -53,14 +66,21 @@ function loadProfiles() {
             }
 
             mainSection.appendChild(fragment);
-        });
+            pages++;
 
+            if (data.length === profilesPerPage + 1) {  // Checks if we got more profiles than are displayed. If yes, then shows load button
+                loadButton.style.display = "block";
+            }
+
+            if (footer !== null && footer !== undefined) {
+                footer.parentElement.removeChild(footer);
+            }
+        });
 }
 
 
 //End Initialization Methods//
 const modal = document.getElementsByClassName("modal")[0];
-const activeFilters = new Set();
 
 function toggleMainTab(tabButton, tabPane) {
     const tabButtons = document.querySelectorAll(".menubar-nav button");
@@ -117,6 +137,9 @@ function toggleFilter(event) {
             allButton.classList.remove("selected");
         }
     }
+
+    clearProfiles();
+    loadProfiles(0);
 }
 
 
@@ -129,6 +152,11 @@ function setDeselected(button) {
 }
 //End Helper Functions//
 
+function loadMoreProfiles(button) {
+    fromIndex = pages * profilesPerPage;
+    const footer = button.parentElement;
+    loadProfiles(fromIndex, footer);
+}
 
 function openAddTutorPopup() {
     modal.style.display = "flex";
@@ -210,7 +238,7 @@ function submitTutor(firstName, surname, email, subjects, picture) {
     formData.append("firstName", firstName);
     formData.append("surname", surname);
     formData.append("email", email);
-    formData.append("subjects", subjects);
+    subjects.forEach( (subject) => formData.append("subjects", subject));
 
     if (picture !== undefined) {
         formData.append("picture", picture);
@@ -235,5 +263,16 @@ function refreshProfiles() {
 
     const mainFooter = document.querySelectorAll("main footer")[0];
     mainFooter.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function clearProfiles() {
+    const mainSection = document.getElementById("browse-tab");
+    const profilePanes = mainSection.querySelectorAll(".profile-pane, footer");
+    console.log(profilePanes)
+
+    mainSection.querySelector(".load-button").style.display = "none";
+    profilePanes.forEach(p => mainSection.removeChild(p));
+
+    pages = 0;
 }
 //End Form Methods//

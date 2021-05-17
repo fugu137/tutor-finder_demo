@@ -8,60 +8,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Repository("sql_dao")
 public class MySQL_DAO implements DAO {
 
     private static Connection con = DatabaseConnection.getConnection();
 
-    public MySQL_DAO() {
-        addSampleData();
-    }
-
-    //    TODO: remove sample data below
-    private void addSampleData() {
-        try {
-            Tutor emily = new Tutor("Emily", "Falah", "emily.falah@mail.com", null, null);
-            List<String> subjects = new ArrayList<>();
-            subjects.add("Art");
-            subjects.add("Photography");
-            subjects.add("English");
-            subjects.add("French");
-            subjects.add("Arabic");
-            emily.addSubjects(subjects);
-            emily.setImagePathByName("sample_f1.jpeg");
-
-            Tutor max = new Tutor("Max", "Favwell", "max.favwell@mail.com", null, null);
-            subjects = new ArrayList<>();
-            subjects.add("Physics");
-            subjects.add("Chemistry");
-            subjects.add("Biology");
-            subjects.add("Economics");
-            max.addSubjects(subjects);
-            max.setImagePathByName("sample_m1.jpeg");
-
-            Tutor carrie = new Tutor("Carrie", "Walsh", "cwalsh@mail.com", null, null);
-            subjects = new ArrayList<>();
-            subjects.add("Art");
-            subjects.add("Photography");
-            subjects.add("Geography");
-            subjects.add("German");
-            subjects.add("History");
-            subjects.add("Japanese");
-            carrie.addSubjects(subjects);
-            carrie.setImagePathByName("sample_f2.jpeg");
-
-            insertTutor(emily);
-            insertTutor(max);
-            insertTutor(carrie);
-
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public int insertTutor(Tutor tutor) throws SQLException {
@@ -94,9 +47,45 @@ public class MySQL_DAO implements DAO {
     }
 
     @Override
-    public List<Tutor> selectAllTutors() throws SQLException, IOException {
-        String query = "SELECT * FROM tutors";
-        PreparedStatement ps = con.prepareStatement(query);
+    public List<Tutor> selectAllTutors(int fromIndex, int numberOfTutors, String[] filters) throws SQLException, IOException {
+        int filterCount = filters.length;
+
+        String query;
+        PreparedStatement ps;
+
+        if (filterCount > 0) {
+            StringBuilder querySB = new StringBuilder();
+            querySB.append("SELECT uuid, firstname, lastname, email,imageURL FROM tutors_subjects " +
+                    "JOIN tutors ON tutors.uuid = tutors_subjects.tutorid WHERE subject IN(");
+
+            String list = "?, ".repeat(filterCount);
+            list = list.replaceAll(", $", "");
+            querySB.append(list);
+
+            querySB.append(") GROUP BY tutors_subjects.tutorid HAVING COUNT(tutorid) = ? LIMIT ? OFFSET ?;");
+            query = querySB.toString();
+
+            ps = con.prepareStatement(query);
+
+            for (int i = 0; i < filterCount; i++) {
+                ps.setString(i + 1, filters[i]);
+            }
+
+            ps.setInt(filterCount + 1, filterCount);
+            ps.setInt(filterCount + 2, numberOfTutors);
+            ps.setInt(filterCount + 3, fromIndex);
+
+        } else {
+            query = "SELECT * FROM tutors LIMIT ? OFFSET ?;";
+            ps = con.prepareStatement(query);
+
+            ps.setInt(1, numberOfTutors);
+            ps.setInt(2, fromIndex);
+        }
+//
+//        System.out.println(query);
+//        System.out.println("PrepState: " + ps);
+
         ResultSet rs = ps.executeQuery();
 
         List<Tutor> tutors = new ArrayList<>();

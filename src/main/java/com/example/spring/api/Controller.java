@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RequestMapping(path="/api")
@@ -35,9 +36,9 @@ public class Controller {
     }
 
     @GetMapping(value = "/tutor")
-    public List<Tutor> getAllTutors() {
+    public List<Tutor> getAllTutors(int fromIndex, int numberOfTutors, String[] filters) {
         try {
-            return tutorManager.getAllTutors();
+            return tutorManager.getAllTutors(fromIndex, numberOfTutors, filters);
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
