@@ -1,6 +1,8 @@
 # Tutor Finder Application #
 
-*Tutor Finder is a web application built using Spring Boot, Javascript, CSS, and MySQL. The application allows users to store and load information about tutors via their web browser.*
+Tutor Finder is a web application built using Spring Boot, JavaScript, CSS, and MySQL. The application allows users to store and load information about tutors via their web browser.
+
+Note: I built this application to practice using Spring Boot, JavaScript, CSS, and SQL (and MySQL). It is a demo and a work in progress, which means that there are some design choices which would be odd in a fully functional web app. For instance, for now there is no separate UI for students and admins. A user can both browse profiles (as a student looking for a tutor would), and add or remove tutor profiles (as an admin would). I have also avioded using some of Spring's handy features like Spring Data JPA, in order to do more of the work manually (like writing SQL queries).
 
 #### Browse Tutors ####
 ![demo1.png](demo1.PNG)
