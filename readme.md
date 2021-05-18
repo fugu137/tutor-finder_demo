@@ -23,19 +23,19 @@ To run the application:
   USE tutor_finder;
 
   CREATE TABLE tutors(
-    uuid VARCHAR(100),
+    uuid VARCHAR(100) PRIMARY KEY,
     firstname VARCHAR(100),
     lastname VARCHAR(100),
     email VARCHAR(100),
-    imageURL VARCHAR(100),
-    PRIMARY KEY (uuid)
+    imageURL VARCHAR(100)
   );
   
   CREATE TABLE tutors_subjects(
-    id INTEGER NOT NULL AUTO_INCREMENT,
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
     tutorid VARCHAR(100),
     subject VARCHAR(100),
-    PRIMARY KEY (id)
+    FOREIGN KEY (tutorid) 
+      REFERENCES tutors(uuid)
   );
   ```
 6. Set the username and password variables in the DatabaseConnection class to your MySQL username and password.
