@@ -49,7 +49,7 @@ public class SampleDataLoader {
             subjects.add("Art");
             subjects.add("Photography");
             subjects.add("Geography");
-            subjects.add("German");
+            subjects.add("Geology");
             subjects.add("History");
             subjects.add("Japanese");
             carrie.addSubjects(subjects);
@@ -59,7 +59,7 @@ public class SampleDataLoader {
             subjects = new ArrayList<>();
             subjects.add("Photography");
             subjects.add("Geology");
-            subjects.add("German");
+            subjects.add("Geography");
             subjects.add("History");
             howard.addSubjects(subjects);
             howard.setImagePathByName("sample_m2.jpeg");
@@ -75,7 +75,7 @@ public class SampleDataLoader {
             Tutor jeremy = new Tutor("Jeremy", "Jones", "j.jones@mail.com", null, null);
             subjects = new ArrayList<>();
             subjects.add("Geography");
-            subjects.add("German");
+            subjects.add("Economics");
             subjects.add("History");
             subjects.add("Physics");
             subjects.add("Chemistry");

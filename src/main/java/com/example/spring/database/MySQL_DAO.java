@@ -34,16 +34,20 @@ public class MySQL_DAO implements DAO {
 
         List<String> subjects = tutor.getSubjects();
 
+        System.out.println(ps);
+        int status = ps.executeUpdate();
+
         for (String subject : subjects) {
             String query2 = "INSERT INTO tutors_subjects(tutorid, subject) VALUES (?, ?)";
             PreparedStatement ps2 = con.prepareStatement(query2);
             ps2.setString(1, tutor.getId().toString());
             ps2.setString(2, subject);
 
+            System.out.println(ps2);
             ps2.executeUpdate();
         }
 
-        return ps.executeUpdate();
+        return status;
     }
 
     @Override
@@ -62,7 +66,7 @@ public class MySQL_DAO implements DAO {
             list = list.replaceAll(", $", "");
             querySB.append(list);
 
-            querySB.append(") GROUP BY tutors_subjects.tutorid HAVING COUNT(tutorid) = ? LIMIT ? OFFSET ?;");
+            querySB.append(") GROUP BY tutors_subjects.tutorid HAVING COUNT(DISTINCT subject) = ? LIMIT ? OFFSET ?;");
             query = querySB.toString();
 
             ps = con.prepareStatement(query);
