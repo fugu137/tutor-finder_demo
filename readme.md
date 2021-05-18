@@ -41,5 +41,3 @@ To run the application:
 6. Set the username and password variables in the DatabaseConnection class to your MySQL username and password.
 7. Run `Application.java` at `\src\main\java\com\example\spring\` to start the server.
 8. Open `index.html` in a web browser to use the application. You should see some sample tutor profiles. Tutors can be added by clicking the icon at the top right of the screen.\*
-
-*Note: this is a work in progress and some features have not been implemented. (It's also just for demo purposes, which is why the user can both search and add tutors as if they are an admin.)
