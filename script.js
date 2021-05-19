@@ -75,6 +75,12 @@ function loadProfiles(fromIndex, footer) {
             if (footer !== null && footer !== undefined) {
                 footer.parentElement.removeChild(footer);
             }
+
+            if (fromIndex > 0) {
+                const profiles = document.querySelectorAll("main .profile");
+                const nextProfile = profiles[fromIndex];
+                nextProfile.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
         });
 }
 
@@ -137,7 +143,7 @@ function toggleFilter(event) {
             allButton.classList.remove("selected");
         }
     }
-
+//   TODO: change to refresh
     clearProfiles();
     loadProfiles(0);
 }
@@ -176,13 +182,13 @@ async function removeTutor(profile) {
         })
             .then(response => response.text())
             .then(data => {
+//              TODO: check
                 console.log(data);
                 location.reload();
             })
             .catch(error => {
                 console.error("Error: " + error);
             });
-
     }
 }
 
@@ -250,7 +256,6 @@ function submitTutor(firstName, surname, email, subjects, picture) {
     })
         .then(function () {
             closeAddTutorPopup();
-            // alert("Tutor successfully added!");
             refreshProfiles();
         })
         .catch(error => {
@@ -259,16 +264,13 @@ function submitTutor(firstName, surname, email, subjects, picture) {
 }
 
 function refreshProfiles() {
-    location.reload();
-
-    const mainFooter = document.querySelectorAll("main footer")[0];
-    mainFooter.scrollIntoView({ behavior: "smooth", block: "start" });
+    clearProfiles();
+    loadProfiles(0);
 }
 
 function clearProfiles() {
     const mainSection = document.getElementById("browse-tab");
     const profilePanes = mainSection.querySelectorAll(".profile-pane, footer");
-    console.log(profilePanes)
 
     mainSection.querySelector(".load-button").style.display = "none";
     profilePanes.forEach(p => mainSection.removeChild(p));

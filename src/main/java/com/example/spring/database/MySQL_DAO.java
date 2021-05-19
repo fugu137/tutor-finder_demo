@@ -24,7 +24,7 @@ public class MySQL_DAO implements DAO {
         }
         tutor.setId();
 
-        int status = 0;
+        int status = -1;
 
         String query = "INSERT INTO tutors(uuid, firstname, lastname, email, imageURL) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement insertTutorPs = con.prepareStatement(query)) {
@@ -57,12 +57,12 @@ public class MySQL_DAO implements DAO {
 
             } catch (SQLException e) {
                 e.printStackTrace();
-                return -1;
+                return status;
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return -1;
+            return status;
         }
     }
 
@@ -126,7 +126,7 @@ public class MySQL_DAO implements DAO {
         while (rs.next()) {
             List<String> subjects = new ArrayList<>();
 
-            String subjectQuery = "SELECT * FROM tutors_subjects WHERE tutorid = ? GROUP BY subject";
+            String subjectQuery = "SELECT * FROM tutors_subjects WHERE tutorid = ? GROUP BY subject ORDER BY subject;";
             String idString = rs.getString("uuid");
 
             try (PreparedStatement ps2 = con.prepareStatement(subjectQuery)) {
@@ -159,16 +159,24 @@ public class MySQL_DAO implements DAO {
     }
 
     @Override
-    public int removeTutor(UUID uid) {
-        String query = "DELETE FROM tutors WHERE uuid = ?";
+    public int removeTutor(UUID uuid) {
+        String query1 = "DELETE FROM tutors_subjects WHERE tutorid = ?;";
+        String query2 = "DELETE FROM tutors WHERE uuid = ?;";
 
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, uid.toString());
-            return ps.executeUpdate();
+        try (PreparedStatement ps1 = con.prepareStatement(query1); PreparedStatement ps2 = con.prepareStatement(query2)) {
+            con.setAutoCommit(false);
+
+            ps1.setString(1, uuid.toString());
+            ps1.executeUpdate();
+
+            ps2.setString(1, uuid.toString());
+            int status = ps2.executeUpdate();
+            con.commit();
+            return status;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return -1;
         }
     }
 }

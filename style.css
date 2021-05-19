@@ -75,7 +75,7 @@ main {
     padding-right: 15px;
     height: 100%;
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -150,7 +150,7 @@ main section {
     right: 0;
     display: flex;
     flex-wrap: wrap;
-    padding: 12px 4px 12px 4px;
+    padding: 12px 0 12px 0;
     /* box-shadow: 0 2px 2px -2px var(--background-blue-dark); */
     border-bottom: 1px solid var(--background-blue-dark);
     justify-content: center;
@@ -273,7 +273,7 @@ main section {
     top: 360px;
     left: 0;
     right: 0;
-    height: 200px;
+    height: 150px;
     z-index: 1;
     transition: 0.4s;
     padding: 2px;
@@ -498,11 +498,6 @@ form label {
     font-size: 11px;
 }
 
-/* 
-select {
-    width: 120px
-} */
-
 .upload {
     display: inline-block;
     margin-top: 5px;
@@ -589,7 +584,7 @@ main footer .load-button:active {
     }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 680px) {
     .menubar {
         position: absolute;
         top: 80px;
@@ -624,7 +619,9 @@ main footer .load-button:active {
         bottom: 0px;
         left: 80px;
         right: 0px;
+        font-size: 16px; /* Without this scrolling is very slow in Firefox (based on font size) */
         scroll-snap-type: none;
+        scroll-padding: 0;
     }
     .topbar-nav {
         padding-right: 50px;

@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -112,8 +111,7 @@ public class Tutor {
         }
     }
 
-    //TODO: remove this temporary method//
-    public void setImagePathByName(String pictureName) {
+    public void setImagePathByName(String pictureName) {                   // Method for loading sample tutor data (tutor images stored in directory below).
         String directory = "src/main/resources/static/profile_images/";
         this.imagePath = directory + pictureName;
     }
