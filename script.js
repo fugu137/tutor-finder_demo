@@ -8,16 +8,14 @@ let pages = 0;
 loadProfiles(0);
 
 function loadProfiles(fromIndex, footer) {
+    if (fromIndex === 0) {
+        idTable.clear();
+    }
+
     const mainSection = document.getElementById("browse-tab");
     const fragment = document.querySelectorAll(".section-template")[0].content.cloneNode(true);
     const loadButton = fragment.querySelectorAll(".load-button")[0];
-
-    const filters = new Array(activeFilters.size);
-    let i = 0;
-    activeFilters.forEach(f => {
-        filters[i] = f.value;
-        i++;
-    });
+    const filters = Array.from(activeFilters, f => f.value);
 
     fetch(url + "?" + new URLSearchParams({
         fromIndex: fromIndex,
@@ -55,11 +53,8 @@ function loadProfiles(fromIndex, footer) {
 
                 const profilePane = fragment.querySelectorAll("section")[0];
                 profilePane.appendChild(profileFrag);
-
-                const profile = profilePane.getElementsByClassName("profile")[i];
-                const name = "profile" + i;
-                profile.id = name;
-                idTable.set(name, id);
+                const profile = profilePane.lastElementChild;
+                idTable.set(profile, id);
 
                 const closeButton = profile.querySelectorAll(".close-button")[0];
                 closeButton.onclick = function () { removeTutor(profile) };
@@ -162,6 +157,7 @@ function loadMoreProfiles(button) {
     fromIndex = pages * profilesPerPage;
     const footer = button.parentElement;
     loadProfiles(fromIndex, footer);
+
 }
 
 function openAddTutorPopup() {
@@ -174,7 +170,7 @@ function closeAddTutorPopup() {
 
 async function removeTutor(profile) {
     if (confirm("Are you sure you want to remove this tutor's profile?")) {
-        const id = idTable.get(profile.id);
+        const id = idTable.get(profile);
 
         fetch(url + "/" + id, {
             method: "DELETE",

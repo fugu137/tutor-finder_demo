@@ -101,6 +101,14 @@ public class SampleDataLoader {
             harry.addSubjects(subjects);
             harry.setImagePathByName("sample_m4.webp");
 
+            Tutor jackson = new Tutor("Jackson", "Smith", "jsmithb@gmail.com", null, null);
+            subjects = new ArrayList<>();
+            subjects.add("Geography");
+            subjects.add("Physics");
+            subjects.add("Geology");
+            jackson.addSubjects(subjects);
+            jackson.setImagePathByName("sample_m4.jpeg");
+
             dao.insertTutor(emily);
             dao.insertTutor(max);
             dao.insertTutor(carrie);
@@ -109,6 +117,7 @@ public class SampleDataLoader {
             dao.insertTutor(jeremy);
             dao.insertTutor(jane);
             dao.insertTutor(harry);
+            dao.insertTutor(jackson);
 
         } catch (IOException | SQLException e) {
             e.printStackTrace();
