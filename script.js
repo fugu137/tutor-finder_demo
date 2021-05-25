@@ -5,19 +5,23 @@ const activeFilters = new Set();
 const profilesPerPage = 9;
 let pages = 0;
 
-loadProfiles(0);
+loadFirstPage();
 
-function loadProfiles(fromIndex, footer) {
-    if (fromIndex === 0) {
-        idTable.clear();
-    }
+function loadFirstPage() {
+    idTable.clear();
+    getAndDisplayProfiles(0);
+}
 
+//End Initialization Methods//
+const modal = document.getElementsByClassName("modal")[0];
+
+async function getAndDisplayProfiles(fromIndex) {
     const mainSection = document.getElementById("browse-tab");
     const fragment = document.querySelectorAll(".section-template")[0].content.cloneNode(true);
     const loadButton = fragment.querySelectorAll(".load-button")[0];
     const filters = Array.from(activeFilters, f => f.value);
 
-    fetch(url + "?" + new URLSearchParams({
+    const result = await fetch(url + "?" + new URLSearchParams({
         fromIndex: fromIndex,
         numberOfTutors: profilesPerPage + 1,    //We get one extra profile so we know if the load button should be available to load more profiles
         filters: filters,
@@ -66,22 +70,21 @@ function loadProfiles(fromIndex, footer) {
             if (data.length === profilesPerPage + 1) {  // Checks if we got more profiles than are displayed. If yes, then shows load button
                 loadButton.style.display = "block";
             }
+    });
 
-            if (footer !== null && footer !== undefined) {
-                footer.parentElement.removeChild(footer);
-            }
-
-            if (fromIndex > 0) {
-                const profiles = document.querySelectorAll("main .profile");
-                const nextProfile = profiles[fromIndex];
-                nextProfile.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
-        });
+    return result;
 }
 
 
-//End Initialization Methods//
-const modal = document.getElementsByClassName("modal")[0];
+async function loadAnotherPage(fromIndex, footer) {
+    const result = await getAndDisplayProfiles(fromIndex);
+
+    footer.parentElement.removeChild(footer);
+
+    const profiles = document.querySelectorAll("main .profile");
+    const nextProfile = profiles[fromIndex];
+    nextProfile.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 function toggleMainTab(tabButton, tabPane) {
     const tabButtons = document.querySelectorAll(".menubar-nav button");
@@ -138,9 +141,8 @@ function toggleFilter(event) {
             allButton.classList.remove("selected");
         }
     }
-//   TODO: change to refresh
     clearProfiles();
-    loadProfiles(0);
+    loadFirstPage();
 }
 
 
@@ -156,8 +158,7 @@ function setDeselected(button) {
 function loadMoreProfiles(button) {
     fromIndex = pages * profilesPerPage;
     const footer = button.parentElement;
-    loadProfiles(fromIndex, footer);
-
+    loadAnotherPage(fromIndex, footer);
 }
 
 function openAddTutorPopup() {
@@ -178,9 +179,9 @@ async function removeTutor(profile) {
         })
             .then(response => response.text())
             .then(data => {
-//              TODO: check
                 console.log(data);
-                location.reload();
+                clearProfiles();
+                loadFirstPage();
             })
             .catch(error => {
                 console.error("Error: " + error);
@@ -252,16 +253,12 @@ function submitTutor(firstName, surname, email, subjects, picture) {
     })
         .then(function () {
             closeAddTutorPopup();
-            refreshProfiles();
+            clearProfiles();
+            loadFirstPage();
         })
         .catch(error => {
             console.error("Unable to add tutor: " + error);
         });
-}
-
-function refreshProfiles() {
-    clearProfiles();
-    loadProfiles(0);
 }
 
 function clearProfiles() {
